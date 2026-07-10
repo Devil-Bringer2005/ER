@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: LateralMovementConfig
   m_EditorClassIdentifier: Assembly-CSharp::EndlessRunner.Player.Movement.LateralMovementConfig
   _acceleration: 100
-  _deceleration: 30
+  _deceleration: 60
   _maxSpeed: 25
   _laneHalfWidth: 100
   _tiltCurve:
