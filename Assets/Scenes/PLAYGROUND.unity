@@ -890,10 +890,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d32d91e6aa4170a4a89a7e9383b61913, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EndlessRunner.Player.Controls.PlayerInputHandler
-  _leftKey: 97
-  _rightKey: 100
-  _meleeKey: 323
-  _rangedKey: 324
 --- !u!143 &1467551298
 CharacterController:
   m_ObjectHideFlags: 0
