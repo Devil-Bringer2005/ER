@@ -816,7 +816,7 @@ MonoBehaviour:
     m_Bits: 1
   m_VolumeTrigger: {fileID: 0}
   m_VolumeFrameworkUpdateModeOption: 2
-  m_RenderPostProcessing: 0
+  m_RenderPostProcessing: 1
   m_Antialiasing: 0
   m_AntialiasingQuality: 2
   m_StopNaN: 0
@@ -1148,13 +1148,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1339279742}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.40821788, y: -0.23456968, z: 0.10938163, w: 0.8754261}
+  m_LocalRotation: {x: 0.8516718, y: 0.122106016, z: 0.22820473, w: -0.4557059}
   m_LocalPosition: {x: 0, y: 3, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
+  m_LocalEulerAnglesHint: {x: 236.3, y: -30, z: 0}
 --- !u!1 &1467551291
 GameObject:
   m_ObjectHideFlags: 0
@@ -1172,6 +1172,7 @@ GameObject:
   - component: {fileID: 1467551293}
   - component: {fileID: 1467551292}
   - component: {fileID: 1467551300}
+  - component: {fileID: 1467551302}
   - component: {fileID: 1467551301}
   m_Layer: 7
   m_Name: Player
@@ -1281,8 +1282,8 @@ CharacterController:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Height: 3
-  m_Radius: 0.5
+  m_Height: 6
+  m_Radius: 2.22
   m_SlopeLimit: 45
   m_StepOffset: 0.3
   m_SkinWidth: 0.08
@@ -1326,10 +1327,26 @@ MonoBehaviour:
   m_GameObject: {fileID: 1467551291}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 556bbd395dcb24047a3937ebd9371f97, type: 3}
+  m_Script: {fileID: 11500000, guid: f9791607436ee05448848ca3f3d29c8a, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Health
-  maxHealth: 50
+  m_EditorClassIdentifier: Assembly-CSharp::EndlessRunner.Player.Combat.PlayerHealth
+  _maxHealth: 100
+--- !u!114 &1467551302
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1467551291}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b213ccfe103663d45bf11c3cde082ee2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EndlessRunner.Player.Collision.PlayerCollisionHandler
+  _config: {fileID: 11400000, guid: 3dbcb85e5ce99b449bb2325e6a3a04ed, type: 2}
+  _lateralMotor: {fileID: 1467551295}
+  _forwardMotor: {fileID: 1467551294}
+  _health: {fileID: 1467551301}
 --- !u!1 &1622376895
 GameObject:
   m_ObjectHideFlags: 0
@@ -1411,6 +1428,7 @@ GameObject:
   - component: {fileID: 1933279732}
   - component: {fileID: 1933279735}
   - component: {fileID: 1933279736}
+  - component: {fileID: 1933279737}
   m_Layer: 8
   m_Name: Rig
   m_TagString: Untagged
@@ -1449,7 +1467,7 @@ CapsuleCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
@@ -1549,6 +1567,33 @@ MonoBehaviour:
   projectileSpeed: 50
   projectileDamage: 10
   projectileLifetime: 5
+--- !u!54 &1933279737
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1933279730}
+  serializedVersion: 5
+  m_Mass: 0.01
+  m_LinearDamping: 0
+  m_AngularDamping: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

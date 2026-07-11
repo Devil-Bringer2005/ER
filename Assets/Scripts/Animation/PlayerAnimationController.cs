@@ -3,11 +3,12 @@ namespace EndlessRunner.Player.Animation
     using UnityEngine;
     using EndlessRunner.Player.Movement;
     using EndlessRunner.Player.Combat;
+    using EndlessRunner.Player.Collision;
 
     /// <summary>
-    /// The only script that talks to the Animator. Movement and combat systems know nothing
-    /// about animation - they just expose state (properties) and events - so the rig, blend
-    /// trees, or even the whole Animator can be swapped without touching gameplay code.
+    /// The only script that talks to the Animator. Movement, combat, and collision systems
+    /// know nothing about animation - they just expose state (properties) and events - so the
+    /// rig, blend trees, or even the whole Animator can be swapped without touching gameplay code.
     /// </summary>
     [RequireComponent(typeof(Animator))]
     [AddComponentMenu("Player/Animation/Player Animation Controller")]
@@ -16,6 +17,7 @@ namespace EndlessRunner.Player.Animation
         [SerializeField] private PlayerLateralMotor _lateralMotor;
         [SerializeField] private PlayerForwardMotor _forwardMotor;
         [SerializeField] private PlayerAttackController _attackController;
+        [SerializeField] private PlayerCollisionHandler _collisionHandler;
 
         private Animator _animator;
 
@@ -25,12 +27,16 @@ namespace EndlessRunner.Player.Animation
         {
             if (_attackController != null)
                 _attackController.AttackExecuted += HandleAttackExecuted;
+            if (_collisionHandler != null)
+                _collisionHandler.ImpactOccurred += HandleImpact;
         }
 
         private void OnDisable()
         {
             if (_attackController != null)
                 _attackController.AttackExecuted -= HandleAttackExecuted;
+            if (_collisionHandler != null)
+                _collisionHandler.ImpactOccurred -= HandleImpact;
         }
 
         private void LateUpdate()
@@ -48,6 +54,12 @@ namespace EndlessRunner.Player.Animation
         {
             if (!string.IsNullOrEmpty(attack.AnimatorTrigger))
                 _animator.SetTrigger(attack.AnimatorTrigger);
+        }
+
+        private void HandleImpact(CollisionImpactInfo info)
+        {
+            if (!string.IsNullOrEmpty(info.AnimatorTrigger))
+                _animator.SetTrigger(info.AnimatorTrigger);
         }
     }
 }

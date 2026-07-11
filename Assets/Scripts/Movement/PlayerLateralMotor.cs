@@ -8,6 +8,11 @@ namespace EndlessRunner.Player.Movement
     /// Owns left/right velocity. Speed builds up while input is held toward a direction
     /// (acceleration-based, Chase the Sun style) rather than snapping to a target speed,
     /// and decays back toward zero when input is released or reversed.
+    ///
+    /// Velocity (what drives tilt/animation) and position (what the lane bound clamps) are
+    /// deliberately separate: hitting a lane wall clips how far you actually move, but never
+    /// zeroes the underlying velocity, so holding input into a wall still reads as "pressing"
+    /// for animation purposes instead of going dead the instant you touch the boundary.
     /// </summary>
     [AddComponentMenu("Player/Movement/Player Lateral Motor")]
     public class PlayerLateralMotor : MonoBehaviour, IMovementContributor
@@ -18,7 +23,7 @@ namespace EndlessRunner.Player.Movement
         private float _currentVelocity;
         private float _currentPosition; // distance from lane center, used only for the optional clamp
 
-        /// <summary>Current lateral speed divided by max speed, in [-1, 1]. Drives strafe blend trees.</summary>
+        /// <summary>Current lateral speed divided by max speed, in [-1, 1]. Drives strafe blend trees and tilt.</summary>
         public float NormalizedVelocity => _config != null && _config.MaxSpeed > 0f
             ? Mathf.Clamp(_currentVelocity / _config.MaxSpeed, -1f, 1f)
             : 0f;
@@ -45,16 +50,42 @@ namespace EndlessRunner.Player.Movement
                 Debug.LogError($"{nameof(PlayerLateralMotor)} is missing its {nameof(LateralMovementConfig)}.", this);
         }
 
+        /// <summary>
+        /// Instantly adds to the current lateral velocity, clamped to the configured max speed.
+        /// Used for collision knockback - tilt and animation react automatically since they
+        /// read this motor's velocity, no separate wiring needed on the caller's end.
+        /// </summary>
+        public void ApplyLateralImpulse(float velocityDelta)
+        {
+            if (_config == null) return;
+            //_currentVelocity = Mathf.Clamp(_currentVelocity + velocityDelta, -_config.MaxSpeed, _config.MaxSpeed);
+            _currentVelocity = _currentVelocity + velocityDelta;
+        }
+
         public Vector3 GetFrameMovement(float deltaTime)
         {
+            if (_config == null) return Vector3.zero;
+
             Tick(deltaTime);
-            return transform.right * (_currentVelocity * deltaTime);
+
+            float delta = _currentVelocity * deltaTime;
+
+            if (_config.LaneHalfWidth > 0f)
+            {
+                float projected = Mathf.Clamp(_currentPosition + delta, -_config.LaneHalfWidth, _config.LaneHalfWidth);
+                delta = projected - _currentPosition;
+                _currentPosition = projected;
+            }
+            else
+            {
+                _currentPosition += delta;
+            }
+
+            return transform.right * delta;
         }
 
         private void Tick(float deltaTime)
         {
-            if (_config == null) return;
-
             float input = _inputSource != null ? _inputSource.LateralInput : 0f;
             float previousVelocity = _currentVelocity;
 
@@ -63,17 +94,6 @@ namespace EndlessRunner.Player.Movement
             float rate = hasInput ? _config.Acceleration : _config.Deceleration;
 
             _currentVelocity = Mathf.MoveTowards(_currentVelocity, targetVelocity, rate * deltaTime);
-
-            if (_config.LaneHalfWidth > 0f)
-            {
-                float projected = _currentPosition + _currentVelocity * deltaTime;
-                if (Mathf.Abs(projected) > _config.LaneHalfWidth)
-                {
-                    projected = Mathf.Clamp(projected, -_config.LaneHalfWidth, _config.LaneHalfWidth);
-                    _currentVelocity = 0f;
-                }
-                _currentPosition = projected;
-            }
 
             float instantaneousAccel = deltaTime > 0f ? (_currentVelocity - previousVelocity) / deltaTime : 0f;
             float maxAccel = Mathf.Max(_config.Acceleration, _config.Deceleration, 0.0001f);
