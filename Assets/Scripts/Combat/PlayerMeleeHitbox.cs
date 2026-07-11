@@ -4,26 +4,38 @@ namespace EndlessRunner.Player.Combat
     using System.Collections.Generic;
     using UnityEngine;
 
-    /// <summary>
-    /// Timed overlap check for melee attacks. Runs on its own delay/duration window so it
-    /// works out of the box with no Animation Event setup required. If you want frame-perfect
-    /// timing tied to the swing animation later, call Swing() from an Animation Event instead
-    /// of from PlayerAttackController - nothing else needs to change.
-    /// </summary>
     [AddComponentMenu("Player/Combat/Player Melee Hitbox")]
+    [RequireComponent(typeof(Collider))]
     public class PlayerMeleeHitbox : MonoBehaviour
     {
-        [SerializeField] private Transform _origin;
+        [SerializeField] private Collider _hitboxCollider;
 
-        private readonly HashSet<IDamageable> _hitThisSwing = new HashSet<IDamageable>();
-        private readonly Collider[] _overlapBuffer = new Collider[16];
+        private readonly HashSet<IDamageable> _hitThisSwing = new();
+        private readonly HashSet<ProjectileDeflector> _deflectedThisSwing = new();
+
         private Coroutine _activeSwing;
 
-        private void Reset() => _origin = transform;
+        private void Reset()
+        {
+            _hitboxCollider = GetComponent<Collider>();
+
+            if (_hitboxCollider != null)
+                _hitboxCollider.isTrigger = true;
+        }
+
+        private void Awake()
+        {
+            if (_hitboxCollider == null)
+                _hitboxCollider = GetComponent<Collider>();
+
+            _hitboxCollider.enabled = false;
+        }
 
         public void Swing(MeleeAttackDefinitionSO data)
         {
-            if (_activeSwing != null) StopCoroutine(_activeSwing);
+            if (_activeSwing != null)
+                StopCoroutine(_activeSwing);
+
             _activeSwing = StartCoroutine(SwingRoutine(data));
         }
 
@@ -32,37 +44,72 @@ namespace EndlessRunner.Player.Combat
             yield return new WaitForSeconds(data.StartupDelay);
 
             _hitThisSwing.Clear();
-            float elapsed = 0f;
-            while (elapsed < data.ActiveDuration)
-            {
-                CheckOverlap(data);
-                elapsed += Time.deltaTime;
-                yield return null;
-            }
+            _deflectedThisSwing.Clear();
+
+            _hitboxCollider.enabled = true;
+
+            yield return new WaitForSeconds(data.ActiveDuration);
+
+            _hitboxCollider.enabled = false;
 
             _activeSwing = null;
         }
 
-        private void CheckOverlap(MeleeAttackDefinitionSO data)
+        private void OnTriggerEnter(Collider other)
         {
-            Vector3 origin = _origin != null ? _origin.position : transform.position;
-            Vector3 center = origin + transform.forward * (data.Range * 0.5f);
-            int count = Physics.OverlapSphereNonAlloc(center, data.Radius, _overlapBuffer, data.HittableLayers, QueryTriggerInteraction.Collide);
-
-            for (int i = 0; i < count; i++)
+            if (!_hitboxCollider.enabled)
+                return;
+            if (other.TryGetComponent(out ProjectileDeflector projectile) &&
+                _deflectedThisSwing.Add(projectile))
             {
-                if (_overlapBuffer[i].TryGetComponent(out IDamageable damageable) && _hitThisSwing.Add(damageable))
-                    damageable.TakeDamage(data.Damage, gameObject);
+                projectile.Deflect(gameObject);
+                return;
+            }
+
+            if (other.TryGetComponent(out IDamageable damageable) &&
+                _hitThisSwing.Add(damageable))
+            {
+                damageable.TakeDamage(0, gameObject); // Replaced below
             }
         }
 
-#if UNITY_EDITOR
-        private void OnDrawGizmosSelected()
+        private void OnTriggerStay(Collider other)
         {
-            Gizmos.color = new Color(1f, 0.2f, 0.2f, 0.4f);
-            Vector3 origin = _origin != null ? _origin.position : transform.position;
-            Gizmos.DrawWireSphere(origin + transform.forward * 0.75f, 0.75f);
+            if (!_hitboxCollider.enabled)
+                return;
+
+            if (other.TryGetComponent(out ProjectileDeflector projectile) &&
+                _deflectedThisSwing.Add(projectile))
+            {
+                projectile.Deflect(gameObject);
+                return;
+            }
+
+            if (other.TryGetComponent(out IDamageable damageable) &&
+                _hitThisSwing.Add(damageable))
+            {
+                damageable.TakeDamage(_currentDamage, gameObject);
+            }
         }
-#endif
+
+        private float _currentDamage;
+
+        private IEnumerator SwingRoutineInternal(MeleeAttackDefinitionSO data)
+        {
+            _currentDamage = data.Damage;
+
+            yield return new WaitForSeconds(data.StartupDelay);
+
+            _hitThisSwing.Clear();
+            _deflectedThisSwing.Clear();
+
+            _hitboxCollider.enabled = true;
+
+            yield return new WaitForSeconds(data.ActiveDuration);
+
+            _hitboxCollider.enabled = false;
+
+            _activeSwing = null;
+        }
     }
 }
