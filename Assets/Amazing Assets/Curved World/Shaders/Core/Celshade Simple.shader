@@ -113,7 +113,7 @@ Shader "Custom/CelshadeSimple"
         HLSLINCLUDE
 
         #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Core.hlsl"
-        //#include "TwistedSpiral.hlsl"
+        #include "VertexManipulation.hlsl"
         
         CBUFFER_START(UnityPerMaterial)
             float4 _MainColor;

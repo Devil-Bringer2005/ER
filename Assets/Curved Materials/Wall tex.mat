@@ -162,17 +162,17 @@ Material:
     - _UseEmission: 0
     - _UseNormal: 1
     - _UseTwistedSpiral: 0
-    - _UseWorldTiling: 1
+    - _UseWorldTiling: 0
     - _WorkflowMode: 1
     - _WorldTilingXMain: 0.3
     - _WorldTilingXShade: 0.3
     - _WorldTilingYMain: 0.2
     - _WorldTilingYShade: 0.2
     - _XRMotionVectorsPass: 1
-    - _XYProjection: 1
+    - _XYProjection: 0
     - _XZProjection: 0
     - _ZWrite: 1
-    - _ZYProjection: 1
+    - _ZYProjection: 0
     m_Colors:
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
