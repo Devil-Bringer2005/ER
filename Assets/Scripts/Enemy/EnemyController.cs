@@ -1,3 +1,5 @@
+using MoreMountains.Feedbacks;
+using System.Runtime.CompilerServices;
 using UnityEngine;
 
 [RequireComponent(typeof(Health))]
@@ -18,6 +20,8 @@ public class EnemyController : MonoBehaviour
     [SerializeField] private float projectileSpeed = 15f;
     [SerializeField] private float projectileDamage = 10f;
     [SerializeField] private float projectileLifetime = 5f;
+
+    [SerializeField] private MMF_Player hitfeedback;
 
     public EnemyDetector Detector => detector;
     public Health Health => health;

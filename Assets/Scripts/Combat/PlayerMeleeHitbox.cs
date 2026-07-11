@@ -1,5 +1,6 @@
 namespace EndlessRunner.Player.Combat
 {
+    using MoreMountains.Feedbacks;
     using System.Collections;
     using System.Collections.Generic;
     using UnityEngine;
@@ -9,6 +10,10 @@ namespace EndlessRunner.Player.Combat
     public class PlayerMeleeHitbox : MonoBehaviour
     {
         [SerializeField] private Collider _hitboxCollider;
+
+        [Header("Feedback")]
+        [SerializeField] private MMF_Player _reflectFeedback;
+        [SerializeField] private MMF_Player _attackFeedback;
 
         private readonly HashSet<IDamageable> _hitThisSwing = new();
         private readonly HashSet<ProjectileDeflector> _deflectedThisSwing = new();
@@ -62,6 +67,7 @@ namespace EndlessRunner.Player.Combat
             if (other.TryGetComponent(out ProjectileDeflector projectile) &&
                 _deflectedThisSwing.Add(projectile))
             {
+                _reflectFeedback?.PlayFeedbacks();
                 projectile.Deflect(gameObject);
                 return;
             }
@@ -69,6 +75,7 @@ namespace EndlessRunner.Player.Combat
             if (other.TryGetComponent(out IDamageable damageable) &&
                 _hitThisSwing.Add(damageable))
             {
+                _attackFeedback?.PlayFeedbacks();
                 damageable.TakeDamage(0, gameObject); // Replaced below
             }
         }

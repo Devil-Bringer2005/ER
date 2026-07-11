@@ -4,6 +4,7 @@ namespace EndlessRunner.Player.Collision
     using UnityEngine;
     using EndlessRunner.Player.Movement;
     using EndlessRunner.Player.Combat;
+    using MoreMountains.Feedbacks;
 
     /// <summary>
     /// Classifies CharacterController impacts into side-on / off-center-frontal / dead-center-frontal
@@ -30,6 +31,9 @@ namespace EndlessRunner.Player.Collision
         [SerializeField] private PlayerForwardMotor _forwardMotor;
         [SerializeField] private PlayerHealth _health;
 
+        [Header("Feedback")]
+        [SerializeField] private MMF_Player _hitfeedback;
+
         private float _nextResponseTime;
 
         /// <summary>Fired once per processed impact, after the response has already been applied.</summary>
@@ -43,6 +47,8 @@ namespace EndlessRunner.Player.Collision
 
             // Ground/floor - never a collision "impact", regardless of layer setup.
             if (Vector3.Dot(hit.normal, Vector3.up) > 0.7f) return;
+
+            _hitfeedback?.PlayFeedbacks();
 
             float forwardAlignment = Vector3.Dot(hit.normal, -transform.forward);
             float sideAlignment = Mathf.Abs(Vector3.Dot(hit.normal, transform.right));

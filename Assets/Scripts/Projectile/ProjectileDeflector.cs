@@ -1,5 +1,6 @@
 namespace EndlessRunner.Player.Combat
 {
+    using MoreMountains.Feedbacks;
     using UnityEngine;
 
     /// <summary>
@@ -27,11 +28,17 @@ namespace EndlessRunner.Player.Combat
         [SerializeField] private float homingDuration = 0.5f; // seconds after launch the projectile actively steers
         [SerializeField] private float homingTurnRate = 180f;  // degrees/sec max turn while homing
 
+        [Header("Feedback")]
+        [SerializeField] private MMF_Player hitFeedback;
+        [SerializeField] private MMF_Player deflectFeedback;
+        [SerializeField] private MMF_Player deflectHitFeedback;
+
         private Vector3 _velocity;
         private float _damage;
         private GameObject _owner;
         private Transform _homingTarget;
         private float _homingTimer;
+        private bool _deflected;
 
         private void Awake()
         {
@@ -49,6 +56,7 @@ namespace EndlessRunner.Player.Combat
             _owner = owner;
             _homingTarget = homingTarget;
             _homingTimer = 0f;
+            _deflected = false;
             Destroy(gameObject, lifetime);
         }
 
@@ -80,6 +88,17 @@ namespace EndlessRunner.Player.Combat
 
             if (other.TryGetComponent(out IDamageable damageable))
             {
+                if (_deflected)
+                {
+                    deflectFeedback?.transform.SetParent(null);
+                    deflectHitFeedback?.PlayFeedbacks();
+                }
+                else
+                {
+                    hitFeedback?.transform.SetParent(null);
+                    hitFeedback?.PlayFeedbacks();
+                }
+
                 damageable.TakeDamage(_damage, _owner);
                 Destroy(gameObject);
             }
@@ -90,12 +109,15 @@ namespace EndlessRunner.Player.Combat
         {
             if (_owner == null) return;
 
+            deflectFeedback?.PlayFeedbacks();
+
             Vector3 direction = (_owner.transform.position - transform.position).normalized;
             float speed = _velocity.magnitude;
             if (speed < 0.1f) speed = fallbackSpeed;
 
             _velocity = direction * (speed * returnSpeedMultiplier);
             _homingTarget = null; // fly straight back - don't keep homing on the original target
+            _deflected = true;
 
             // Ownership flips to whoever deflected it - this is what lets the
             // projectile damage its original owner once it arrives (they're
