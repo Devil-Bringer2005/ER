@@ -8,18 +8,22 @@ using UnityEngine;
 /// </summary>
 public class VelocityTracker : MonoBehaviour
 {
-    public Vector3 Velocity { get; private set; }
+    [field: SerializeField] public Vector3 Velocity { get; private set; }
 
-    private Vector3 _lastPosition;
+    [SerializeField] float sampleRate = 0.1f;
 
-    private void Start()
+    private float timer;
+    private Vector3 lastPosition;
+
+    private void Update()
     {
-        _lastPosition = transform.position;
-    }
+        timer += Time.deltaTime;
 
-    private void FixedUpdate()
-    {
-        Velocity = (transform.position - _lastPosition) / Time.fixedDeltaTime;
-        _lastPosition = transform.position;
+        if (timer < sampleRate)
+            return;
+
+        Velocity = (transform.position - lastPosition) / timer;
+        lastPosition = transform.position;
+        timer = 0f;
     }
 }

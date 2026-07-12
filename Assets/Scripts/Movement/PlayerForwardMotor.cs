@@ -17,7 +17,7 @@ namespace EndlessRunner.Player.Movement
         private float _penaltyRecoveryRate;
 
         /// <summary>Current forward speed, units/sec.</summary>
-        public float CurrentSpeed { get; private set; }
+        [field: SerializeField] public float CurrentSpeed { get; private set; }
 
         /// <summary>Current forward speed divided by max speed, in [0, 1]. Feeds run-speed blend trees.</summary>
         public float NormalizedSpeed => _config != null && _config.MaxSpeed > 0f

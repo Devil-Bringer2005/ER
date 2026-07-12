@@ -294,7 +294,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 87ac67b2a8e203047b393a281eba0b07, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlatformRunner.Platforms.BlockConnector
-  connectorType: 0
+  connectorType: 1
   category: 0
 --- !u!1 &2252120336184239809
 GameObject:
@@ -373,7 +373,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 87ac67b2a8e203047b393a281eba0b07, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlatformRunner.Platforms.BlockConnector
-  connectorType: 1
+  connectorType: 0
   category: 0
 --- !u!1 &4524852180133454257
 GameObject:

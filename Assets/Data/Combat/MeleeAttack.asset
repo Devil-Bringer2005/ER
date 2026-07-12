@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: MeleeAttack
   m_EditorClassIdentifier: Assembly-CSharp::EndlessRunner.Player.Combat.MeleeAttackDefinitionSO
   _animatorTrigger: Attack
+  _animatorTrigger2: Attack 2
   _cooldown: 0.5
   _damage: 10
   _startupDelay: 0.1

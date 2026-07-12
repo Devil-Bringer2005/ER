@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: ForwardMovementConfig
   m_EditorClassIdentifier: Assembly-CSharp::EndlessRunner.Player.Movement.ForwardMovementConfig
   _baseSpeed: 40
-  _speedRampPerSecond: 0.15
+  _speedRampPerSecond: 10
   _maxSpeed: 100

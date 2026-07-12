@@ -1,5 +1,6 @@
 namespace EndlessRunner.Player.Animation
 {
+    using System.Collections.Generic;
     using UnityEngine;
     using EndlessRunner.Player.Movement;
     using EndlessRunner.Player.Combat;
@@ -19,14 +20,20 @@ namespace EndlessRunner.Player.Animation
         [SerializeField] private PlayerAttackController _attackController;
         [SerializeField] private PlayerCollisionHandler _collisionHandler;
 
+        private readonly Dictionary<AttackDefinitionSO, bool> _usePrimaryTrigger = new();
+
         private Animator _animator;
 
-        private void Awake() => _animator = GetComponent<Animator>();
+        private void Awake()
+        {
+            _animator = GetComponent<Animator>();
+        }
 
         private void OnEnable()
         {
             if (_attackController != null)
                 _attackController.AttackExecuted += HandleAttackExecuted;
+
             if (_collisionHandler != null)
                 _collisionHandler.ImpactOccurred += HandleImpact;
         }
@@ -35,6 +42,7 @@ namespace EndlessRunner.Player.Animation
         {
             if (_attackController != null)
                 _attackController.AttackExecuted -= HandleAttackExecuted;
+
             if (_collisionHandler != null)
                 _collisionHandler.ImpactOccurred -= HandleImpact;
         }
@@ -44,16 +52,34 @@ namespace EndlessRunner.Player.Animation
             // LateUpdate runs after PlayerMotorDriver's Update, so these values are fresh
             // for this frame - no explicit ordering/event wiring needed for continuous state.
             if (_lateralMotor != null)
-                _animator.SetFloat(PlayerAnimatorParameters.LateralSpeed, _lateralMotor.NormalizedVelocity);
+                _animator.SetFloat(
+                    PlayerAnimatorParameters.LateralSpeed,
+                    _lateralMotor.NormalizedVelocity);
 
             if (_forwardMotor != null)
-                _animator.SetFloat(PlayerAnimatorParameters.ForwardSpeed, _forwardMotor.NormalizedSpeed);
+                _animator.SetFloat(
+                    PlayerAnimatorParameters.ForwardSpeed,
+                    _forwardMotor.NormalizedSpeed);
         }
 
         private void HandleAttackExecuted(AttackDefinitionSO attack)
         {
-            if (!string.IsNullOrEmpty(attack.AnimatorTrigger))
-                _animator.SetTrigger(attack.AnimatorTrigger);
+            if (attack == null)
+                return;
+
+            bool usePrimary = true;
+
+            if (_usePrimaryTrigger.TryGetValue(attack, out bool previous))
+                usePrimary = !previous;
+
+            _usePrimaryTrigger[attack] = usePrimary;
+
+            string trigger = usePrimary
+                ? attack.AnimatorTrigger
+                : attack.AnimatorTrigger2;
+
+            if (!string.IsNullOrEmpty(trigger))
+                _animator.SetTrigger(trigger);
         }
 
         private void HandleImpact(CollisionImpactInfo info)

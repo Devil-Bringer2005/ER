@@ -7,7 +7,7 @@ public class EnemyDetectState : IEnemyState
     public void Enter(EnemyController enemy)
     {
         _timer = 0f;
-        // Play alert animation, face the player, etc.
+        enemy.detectFeedback?.PlayFeedbacks();
     }
 
     public void Tick(EnemyController enemy)

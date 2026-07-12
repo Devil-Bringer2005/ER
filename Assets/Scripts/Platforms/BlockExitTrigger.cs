@@ -28,6 +28,7 @@ namespace PlatformRunner.Platforms
         {
             if (!other.CompareTag(playerTag)) return;
             PlayerExited?.Invoke(_owner);
+            Debug.Log("Exit");
         }
     }
 }

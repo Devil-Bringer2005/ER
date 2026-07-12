@@ -43,6 +43,8 @@ public class EnemyAttackState : IEnemyState
         if (enemy.ProjectilePrefab == null || enemy.FirePoint == null || enemy.PlayerTarget == null)
             return;
 
+        enemy.attackFeedback?.PlayFeedbacks();
+
         Vector3 targetVelocity = enemy.PlayerVelocityTracker ? enemy.PlayerVelocityTracker.Velocity : Vector3.zero;
 
         Vector3 aimPoint = ProjectileAimSolver.PredictInterceptPosition(

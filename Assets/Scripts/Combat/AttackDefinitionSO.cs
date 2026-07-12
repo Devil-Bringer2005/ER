@@ -12,10 +12,13 @@ namespace EndlessRunner.Player.Combat
     public abstract class AttackDefinitionSO : ScriptableObject
     {
         [SerializeField] private string _animatorTrigger = "Attack";
+        [SerializeField] private string _animatorTrigger2 = "Attack";
         [SerializeField] private float _cooldown = 0.5f;
         [SerializeField] private float _damage = 10f;
 
         public string AnimatorTrigger => _animatorTrigger;
+        public string AnimatorTrigger2 => _animatorTrigger2;
+
         public float Cooldown => _cooldown;
         public float Damage => _damage;
 

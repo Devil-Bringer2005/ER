@@ -21,7 +21,11 @@ public class EnemyController : MonoBehaviour
     [SerializeField] private float projectileDamage = 10f;
     [SerializeField] private float projectileLifetime = 5f;
 
-    [SerializeField] private MMF_Player hitfeedback;
+    [Header("Feedbacks")]
+    [SerializeField] public MMF_Player idleFeedback;
+    [SerializeField] public MMF_Player detectFeedback;
+    [SerializeField] public MMF_Player attackFeedback;
+    [SerializeField] public MMF_Player hitfeedback;
 
     public EnemyDetector Detector => detector;
     public Health Health => health;

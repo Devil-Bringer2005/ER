@@ -2,7 +2,7 @@ public class EnemyIdleState : IEnemyState
 {
     public void Enter(EnemyController enemy)
     {
-        // Play idle animation here if needed
+        enemy.idleFeedback?.PlayFeedbacks();
     }
 
     public void Tick(EnemyController enemy)

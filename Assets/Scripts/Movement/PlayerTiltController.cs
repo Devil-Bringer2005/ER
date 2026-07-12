@@ -21,17 +21,29 @@ namespace EndlessRunner.Player.Movement
         {
             _lateralMotor = GetComponent<PlayerLateralMotor>();
         }
+        private Quaternion _lastTilt = Quaternion.identity;
 
         private void LateUpdate()
         {
-            if (_lateralMotor == null || _config == null || _visualRoot == null) return;
+            if (_lateralMotor == null || _config == null || _visualRoot == null)
+                return;
+
+            // Remove last frame's tilt
+            _visualRoot.localRotation *= Quaternion.Inverse(_lastTilt);
 
             float momentum = _lateralMotor.NormalizedVelocity;
             float easedFactor = _config.TiltCurve.Evaluate(Mathf.Abs(momentum)) * Mathf.Sign(momentum);
             float targetAngle = -easedFactor * _config.MaxTiltAngle;
 
-            _currentAngle = Mathf.SmoothDamp(_currentAngle, targetAngle, ref _angleVelocity, _config.TiltSmoothTime);
-            _visualRoot.localRotation = Quaternion.Euler(0f, 0f, _currentAngle);
+            _currentAngle = Mathf.SmoothDamp(
+                _currentAngle,
+                targetAngle,
+                ref _angleVelocity,
+                _config.TiltSmoothTime);
+
+            // Apply new tilt
+            _lastTilt = Quaternion.AngleAxis(_currentAngle, Vector3.forward);
+            _visualRoot.localRotation *= _lastTilt;
         }
     }
 }
