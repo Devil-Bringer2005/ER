@@ -123,6 +123,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2059436507870251032}
   - component: {fileID: 2158106315554862140}
+  - component: {fileID: 5108137170182584146}
   m_Layer: 0
   m_Name: Gem
   m_TagString: Untagged
@@ -168,3 +169,17 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &5108137170182584146
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6867549937828645249}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dde7dc144a8721f428f39a1642b46df7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlatformRunner.Spawning.SpawnablePlacement
+  category: 0
+  groundPoint: {fileID: 2059436507870251032}

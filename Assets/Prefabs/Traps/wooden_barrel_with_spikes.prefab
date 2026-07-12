@@ -9,6 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7011929880731608878}
+  - component: {fileID: 6882281112087590665}
   m_Layer: 0
   m_Name: wooden_barrel_with_spikes
   m_TagString: Untagged
@@ -33,6 +34,20 @@ Transform:
   - {fileID: 725483151753827149}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
+--- !u!114 &6882281112087590665
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4894573045859228557}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dde7dc144a8721f428f39a1642b46df7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlatformRunner.Spawning.SpawnablePlacement
+  category: 1
+  groundPoint: {fileID: 7011929880731608878}
 --- !u!1 &8707564248590804865
 GameObject:
   m_ObjectHideFlags: 0

@@ -1379,6 +1379,7 @@ Transform:
   - {fileID: 4834431567081082896}
   - {fileID: 5297793552499070637}
   - {fileID: 1238764198197123793}
+  - {fileID: 7088010752235322474}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &3475753298031696564
@@ -1966,6 +1967,52 @@ Transform:
   - {fileID: 6846132412370615554}
   m_Father: {fileID: 157810167551551161}
   m_LocalEulerAnglesHint: {x: -90, y: 90, z: 0}
+--- !u!1 &5394377366936197503
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8611875182480257174}
+  - component: {fileID: 7071466421693378660}
+  m_Layer: 0
+  m_Name: Spawn Point
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8611875182480257174
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5394377366936197503}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: -4.02, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 7088010752235322474}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7071466421693378660
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5394377366936197503}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0e47e02e9a1ba5a4f9a9407a1264f07d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlatformRunner.Spawning.SpawnPoint
+  category: 0
+  isActive: 1
 --- !u!1 &5717109171198080374
 GameObject:
   m_ObjectHideFlags: 0
@@ -2877,6 +2924,65 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 0.78710914, z: 5.91343}
   m_Center: {x: 0, y: 0.10322645, z: 2.8010223}
+--- !u!1 &9023405187338672091
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7088010752235322474}
+  - component: {fileID: 1923936444719557954}
+  m_Layer: 0
+  m_Name: Spawner
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7088010752235322474
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9023405187338672091}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 581.4, y: 0, z: 326.80664}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 8611875182480257174}
+  m_Father: {fileID: 157810167551551161}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1923936444719557954
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9023405187338672091}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ebf89507097575942ad7e7a6d67f4944, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlatformRunner.Spawning.ObjectSpawner
+  spawnables:
+  - prefab: {fileID: 1516954709767213420, guid: bfaa00c938697a847857b10c8b45a306, type: 3}
+    weight: 1
+  - prefab: {fileID: 6882281112087590665, guid: d94177f38e01f364ba5865e8497547e0, type: 3}
+    weight: 1
+  - prefab: {fileID: 4379751763513431883, guid: 991cf21b338892a4ebe8fd2de8443915, type: 3}
+    weight: 1
+  - prefab: {fileID: 7412899662323314683, guid: 55490cd2d60e557479656f10063c07b7, type: 3}
+    weight: 1
+  - prefab: {fileID: 5108137170182584146, guid: 60cb552db8d90164893d97a19cdc2a39, type: 3}
+    weight: 1
+  fillChance: 1
+  prewarmPerPrefab: 2
+  poolParent: {fileID: 7088010752235322474}
 --- !u!1 &9071282758762301179
 GameObject:
   m_ObjectHideFlags: 0
