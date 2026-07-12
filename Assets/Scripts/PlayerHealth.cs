@@ -1,5 +1,7 @@
 ﻿namespace EndlessRunner.Player.Combat
 {
+    using MoreMountains.Feedbacks;
+    using MoreMountains.Tools;
     using System;
     using UnityEngine;
 
@@ -11,6 +13,7 @@
     public class PlayerHealth : MonoBehaviour, IDamageable
     {
         [SerializeField] private float _maxHealth = 100f;
+        [SerializeField] private MMProgressBar[] progressBars;
 
         public float MaxHealth => _maxHealth;
         public float CurrentHealth { get; private set; }
@@ -20,7 +23,15 @@
         public event Action<float, float> HealthChanged;
         public event Action Died;
 
-        private void Awake() => CurrentHealth = _maxHealth;
+        public MMF_Player playerHit;
+
+        private float SegmentSize => _maxHealth / progressBars.Length;
+
+        private void Awake()
+        {
+            CurrentHealth = _maxHealth;
+            UpdateSegmentBars();
+        }
 
         public void TakeDamage(float amount, GameObject source)
         {
@@ -28,9 +39,31 @@
 
             CurrentHealth = Mathf.Max(0f, CurrentHealth - amount);
             HealthChanged?.Invoke(CurrentHealth, _maxHealth);
+            UpdateSegmentBars();
+
+            playerHit.PlayFeedbacks();
 
             if (IsDead)
                 Died?.Invoke();
+        }
+
+        /// <summary>
+        /// Splits CurrentHealth across progressBars evenly. The last index represents the
+        /// topmost slice of the health pool, so it drains first; index 0 drains last.
+        /// </summary>
+        private void UpdateSegmentBars()
+        {
+            if (progressBars == null || progressBars.Length == 0) return;
+
+            float segmentSize = SegmentSize;
+
+            for (int i = 0; i < progressBars.Length; i++)
+            {
+                float segmentMin = i * segmentSize;
+                float segmentCurrent = Mathf.Clamp(CurrentHealth, segmentMin, segmentMin + segmentSize) - segmentMin;
+
+                progressBars[i].UpdateBar(segmentCurrent, 0f, segmentSize);
+            }
         }
     }
 }

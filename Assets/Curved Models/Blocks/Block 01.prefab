@@ -1355,6 +1355,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 157810167551551161}
+  - component: {fileID: -1000276859494770866}
   m_Layer: 0
   m_Name: Block 01
   m_TagString: Untagged
@@ -1382,6 +1383,19 @@ Transform:
   - {fileID: 7088010752235322474}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &-1000276859494770866
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3334579212749808032}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0513920b5d40a194cac5ee37cd85aa18, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlatformRunner.Platforms.PlatformBlock
+  connectors: []
 --- !u!1 &3475753298031696564
 GameObject:
   m_ObjectHideFlags: 0
@@ -2011,7 +2025,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0e47e02e9a1ba5a4f9a9407a1264f07d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlatformRunner.Spawning.SpawnPoint
-  category: 0
+  category: 1
   isActive: 1
 --- !u!1 &5717109171198080374
 GameObject:

@@ -1,10 +1,12 @@
 using EndlessRunner.Player.Combat;
+using MoreMountains.Feedbacks;
 using System;
 using UnityEngine;
 
 public class Health : MonoBehaviour, IDamageable
 {
     [SerializeField] private float maxHealth = 50f;
+    [SerializeField] public MMF_Player hitfeedback;
 
     private float _currentHealth;
 
@@ -31,6 +33,7 @@ public class Health : MonoBehaviour, IDamageable
     {
         OnDeath?.Invoke();
         // Hook up death animation, ragdoll, pooling, etc. here
-        gameObject.SetActive(false);
+        //gameObject.SetActive(false);
+        hitfeedback?.PlayFeedbacks();
     }
 }

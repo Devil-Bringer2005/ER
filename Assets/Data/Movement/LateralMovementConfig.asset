@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 874e1b44d958f434b812ce26b8a7c797, type: 3}
   m_Name: LateralMovementConfig
   m_EditorClassIdentifier: Assembly-CSharp::EndlessRunner.Player.Movement.LateralMovementConfig
-  _acceleration: 100
-  _deceleration: 60
-  _maxSpeed: 25
-  _laneHalfWidth: 100
+  _acceleration: 150
+  _deceleration: 100
+  _maxSpeed: 50
+  _laneHalfWidth: 10000
   _tiltCurve:
     serializedVersion: 2
     m_Curve:

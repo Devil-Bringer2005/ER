@@ -168,7 +168,7 @@ namespace PlatformRunner.Platforms
             HookExitTriggers(block);
             _active.AddLast(block);
 
-            BlockConnector chosenExit = ChooseExit(block);
+            BlockConnector chosenExit = ResolveExit(block);
             _chosenExit[block] = chosenExit;
 
             if (chosenExit != null)
@@ -176,6 +176,19 @@ namespace PlatformRunner.Platforms
                 _nextSpawnPosition = chosenExit.Position;
                 _nextSpawnRotation = chosenExit.Rotation;
                 _nextRequiredCategory = chosenExit.Category;
+            }
+            else
+            {
+                // Only reachable now if the block truly has zero exit
+                // connectors - PickPrefab filters those out for anything
+                // picked mid-chain, so in practice this should only fire
+                // for a manually-placed edge case (e.g. Initial Platform)
+                // or a fully misconfigured prefab list. Left silent, the
+                // cursor would stay wherever it already was, and the NEXT
+                // SpawnNextBlock() call would attach its entry to that same
+                // spot - producing multiple blocks piled at one exit
+                // instead of a connected chain.
+                Debug.LogError($"[PlatformGenerator] Spawned block '{block.name}' has no exit connector at all - the chain cannot continue from here. The next SpawnNextBlock() call would otherwise silently reuse this block's own entry point instead of advancing.", block);
             }
 
             MaybeRecenterWorld();
@@ -189,9 +202,44 @@ namespace PlatformRunner.Platforms
         /// <summary>Override in a subclass to control branching (e.g. follow player's lane) instead of random.</summary>
         protected virtual BlockConnector ChooseExit(PlatformBlock block) => block.GetRandomExit();
 
+        /// <summary>
+        /// Tries ChooseExit() first (a subclass's lane-following logic, or
+        /// the default random pick), but if that legitimately finds no
+        /// suitable exit - e.g. nothing matches the player's current lane -
+        /// falls back to ANY of the block's exits rather than propagating
+        /// null. A null here would leave the spawn cursor stuck at this
+        /// block's own entry point, so the next spawned block would attach
+        /// to that same connector instead of continuing the chain - three
+        /// blocks piled side by side instead of one connected line. Always
+        /// keeping the physical chain connected, even if that means
+        /// occasionally not honoring the subclass's preferred exit, is
+        /// better than that.
+        /// </summary>
+        private BlockConnector ResolveExit(PlatformBlock block)
+        {
+            BlockConnector exit = ChooseExit(block);
+            if (exit != null) return exit;
+
+            BlockConnector fallback = block.GetRandomExit();
+            if (fallback != null)
+                Debug.LogWarning($"[PlatformGenerator] ChooseExit() found no suitable exit for block '{block.name}' - falling back to a random exit so the chain stays connected. If you're using a custom ChooseExit override (e.g. lane-following), this means it couldn't match this block.", block);
+
+            return fallback;
+        }
+
         private PlatformBlock PickPrefab(ConnectorCategory requiredEntryCategory)
         {
-            var candidates = blockPrefabs.Where(p => p != null && p.GetEntry(requiredEntryCategory) != null).ToList();
+            // Requiring an exit here too - not just a matching entry - is
+            // what stops a dead-end prefab (zero exit connectors) from ever
+            // being picked mid-chain. Without this, spawning one silently
+            // leaves the cursor stuck at that block's own entry point (see
+            // the else-branch in SpawnNextBlock), so the NEXT block spawned
+            // lands its entry on that same connector instead of continuing
+            // the chain - i.e. one exit ends up with multiple entries
+            // stacked on top of it.
+            var candidates = blockPrefabs
+                .Where(p => p != null && p.GetEntry(requiredEntryCategory) != null && p.GetRandomExit() != null)
+                .ToList();
             return candidates.Count == 0 ? null : candidates[UnityEngine.Random.Range(0, candidates.Count)];
         }
 

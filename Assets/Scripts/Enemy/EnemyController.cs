@@ -25,7 +25,6 @@ public class EnemyController : MonoBehaviour
     [SerializeField] public MMF_Player idleFeedback;
     [SerializeField] public MMF_Player detectFeedback;
     [SerializeField] public MMF_Player attackFeedback;
-    [SerializeField] public MMF_Player hitfeedback;
 
     public EnemyDetector Detector => detector;
     public Health Health => health;

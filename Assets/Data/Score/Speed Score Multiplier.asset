@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 80b45ea2b225a09418f76ad81110055f, type: 3}
   m_Name: Speed Score Multiplier
   m_EditorClassIdentifier: Assembly-CSharp::EndlessRunner.Scoring.MultiplierSourceSO
-  sourceName: Source
-  multiplierIncrease: 0.1
+  sourceName: High Speed
+  multiplierIncrease: 0.4
   directScoreBonus: 0
-  duration: 0
-  maxStackedContribution: 1
+  duration: 2
+  maxStackedContribution: 2

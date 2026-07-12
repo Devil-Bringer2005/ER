@@ -2948,6 +2948,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7545656960212486335}
+  - component: {fileID: 2326285807011185139}
   m_Layer: 0
   m_Name: Block 03
   m_TagString: Untagged
@@ -2974,6 +2975,19 @@ Transform:
   - {fileID: 1559236378528949139}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2326285807011185139
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7929719332063060348}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0513920b5d40a194cac5ee37cd85aa18, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlatformRunner.Platforms.PlatformBlock
+  connectors: []
 --- !u!1 &8396198716729897815
 GameObject:
   m_ObjectHideFlags: 0

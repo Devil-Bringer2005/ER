@@ -13,11 +13,21 @@ namespace EndlessRunner.Player.Movement
     /// deliberately separate: hitting a lane wall clips how far you actually move, but never
     /// zeroes the underlying velocity, so holding input into a wall still reads as "pressing"
     /// for animation purposes instead of going dead the instant you touch the boundary.
+    ///
+    /// snapOnDirectionReversal picks which of two feels a reversal (holding right, then
+    /// switching to left mid-motion) gets: false (default) keeps the original momentum-
+    /// preserving curve - velocity decelerates through zero and back up as one continuous
+    /// MoveTowards ramp. true snaps velocity straight to zero the instant the reversal is
+    /// detected, so the new direction starts its own fresh acceleration ramp from rest
+    /// instead of continuing the old ramp in reverse.
     /// </summary>
     [AddComponentMenu("Player/Movement/Player Lateral Motor")]
     public class PlayerLateralMotor : MonoBehaviour, IMovementContributor
     {
         [SerializeField] private LateralMovementConfig _config;
+
+        [Tooltip("false = original behaviour: a reversal decelerates through zero and back up as one continuous curve, preserving momentum. true = snap velocity to zero the instant input reverses direction, so the new direction accelerates from rest instead of from the old velocity.")]
+        [SerializeField] private bool snapOnDirectionReversal = false;
 
         private IPlayerInputSource _inputSource;
         private float _currentVelocity;
@@ -34,6 +44,9 @@ namespace EndlessRunner.Player.Movement
         /// at rest) - useful for transient effects like a camera kick or dust puff on a hard
         /// direction change, but NOT what tilt is driven by (see PlayerTiltController, which
         /// uses NormalizedVelocity so the lean persists for as long as you hold input).
+        /// With snapOnDirectionReversal enabled, a reversal produces an even sharper spike
+        /// here (the whole old velocity is undone in one frame), which suits camera-kick-style
+        /// effects well.
         /// </summary>
         public float ClampedAcceleration { get; private set; }
 
@@ -91,6 +104,21 @@ namespace EndlessRunner.Player.Movement
 
             bool hasInput = Mathf.Abs(input) > 0.01f;
             float targetVelocity = input * _config.MaxSpeed;
+
+            // _currentVelocity * input < 0f is true exactly when the two have
+            // opposite signs and are both non-zero - i.e. genuinely moving one
+            // way while input now wants the other way. (Using this product
+            // instead of comparing Mathf.Sign() avoids Mathf.Sign(0) == 1
+            // falsely counting rest-to-moving as a "reversal".)
+            if (snapOnDirectionReversal && _currentVelocity * input < 0f)
+            {
+                // Snap straight to zero instead of letting MoveTowards below
+                // decelerate through it - so THIS frame's MoveTowards starts a
+                // fresh acceleration ramp toward the new target instead of
+                // continuing the old ramp in reverse.
+                _currentVelocity = 0f;
+            }
+
             float rate = hasInput ? _config.Acceleration : _config.Deceleration;
 
             _currentVelocity = Mathf.MoveTowards(_currentVelocity, targetVelocity, rate * deltaTime);

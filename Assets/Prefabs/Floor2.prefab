@@ -464,7 +464,6 @@ GameObject:
   m_Component:
   - component: {fileID: 6290725792644466305}
   - component: {fileID: 2943851877812707299}
-  - component: {fileID: 3907418263739574909}
   m_Layer: 0
   m_Name: Spawner
   m_TagString: Untagged
@@ -515,20 +514,6 @@ MonoBehaviour:
   fillChance: 1
   prewarmPerPrefab: 2
   poolParent: {fileID: 6290725792644466305}
---- !u!114 &3907418263739574909
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4635947196417699306}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0e47e02e9a1ba5a4f9a9407a1264f07d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::PlatformRunner.Spawning.SpawnPoint
-  category: 0
-  isActive: 1
 --- !u!1 &4665107868099205114
 GameObject:
   m_ObjectHideFlags: 0
