@@ -16,8 +16,8 @@ TagManager:
   - Enemy
   - Obstacle
   - Projectile
-  - 
-  - 
+  - Collector
+  - Collectible
   - 
   - 
   - 

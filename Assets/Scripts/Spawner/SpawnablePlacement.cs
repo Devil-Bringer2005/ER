@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 namespace PlatformRunner.Spawning
@@ -27,6 +28,19 @@ namespace PlatformRunner.Spawning
         [SerializeField] private Transform groundPoint;
 
         public SpawnCategory Category => category;
+
+        /// <summary>
+        /// Raised when this instance wants to hand itself back before its
+        /// owning block/section would normally recycle it - e.g. a
+        /// Collectible that's just been picked up. Whoever spawned this
+        /// instance (typically an ObjectSpawner) subscribes to this, so a
+        /// one-shot spawnable can give itself up without knowing anything
+        /// about spawners, pools, or SpawnPoints.
+        /// </summary>
+        public event Action<SpawnablePlacement> ReleaseRequested;
+
+        /// <summary>Call this to hand the instance back to whatever spawned it, instead of waiting for the owning block to recycle.</summary>
+        public void RequestRelease() => ReleaseRequested?.Invoke(this);
 
         /// <summary>
         /// Offset from the root to the ground point, expressed in the root's

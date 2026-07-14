@@ -22,6 +22,14 @@ namespace PlatformRunner.Spawning
     ///    explicit point lists via SpawnInCategory(points, category) /
     ///    ReleaseAll(points) - useful for spawn points that aren't tied to
     ///    a pooled block at all (e.g. a static hand-built section of level).
+    ///
+    /// Spawned instances can also give themselves back early - before their
+    /// owning block would normally recycle them - by raising
+    /// SpawnablePlacement.ReleaseRequested (see Collectible for an example).
+    /// This spawner subscribes to that event for every instance it hands
+    /// out, so e.g. picking up a coin immediately frees its SpawnPoint and
+    /// returns the instance to its pool instead of leaving it "occupied"
+    /// (and un-poolable) until the whole block is recycled.
     /// </summary>
     public class ObjectSpawner : MonoBehaviour
     {
@@ -59,6 +67,13 @@ namespace PlatformRunner.Spawning
         // recycled block) without hunting for instances themselves.
         private readonly Dictionary<SpawnPoint, SpawnablePlacement> _liveInstances =
             new Dictionary<SpawnPoint, SpawnablePlacement>();
+
+        // Reverse of _liveInstances, kept in lockstep with it. Needed so a
+        // ReleaseRequested callback - which only knows the instance, not the
+        // point it's currently sitting on - can find the right point to
+        // release in O(1).
+        private readonly Dictionary<SpawnablePlacement, SpawnPoint> _instanceToPoint =
+            new Dictionary<SpawnablePlacement, SpawnPoint>();
 
         private static readonly SpawnCategory[] AllCategories =
             (SpawnCategory[])Enum.GetValues(typeof(SpawnCategory));
@@ -139,8 +154,18 @@ namespace PlatformRunner.Spawning
             _instanceToPool[instance] = pool;
             instance.AlignGroundTo(point.Position, point.Rotation);
 
+            // Defensive -= then += : the same pooled instance gets handed
+            // out (and released) many times over its life, and each time it
+            // may land on a different SpawnPoint. Unsubscribing first keeps
+            // exactly one subscription live, so a later ReleaseRequested
+            // always resolves through _instanceToPoint to wherever it's
+            // *currently* sitting, never a stale point from a previous cycle.
+            instance.ReleaseRequested -= HandleReleaseRequested;
+            instance.ReleaseRequested += HandleReleaseRequested;
+
             point.Occupied = true;
             _liveInstances[point] = instance;
+            _instanceToPoint[instance] = point;
             return instance;
         }
 
@@ -149,12 +174,15 @@ namespace PlatformRunner.Spawning
         {
             if (!_liveInstances.TryGetValue(point, out SpawnablePlacement instance)) return;
 
+            instance.ReleaseRequested -= HandleReleaseRequested;
+
             if (_instanceToPool.TryGetValue(instance, out ObjectPool<SpawnablePlacement> pool))
             {
                 pool.Release(instance);
                 _instanceToPool.Remove(instance);
             }
 
+            _instanceToPoint.Remove(instance);
             _liveInstances.Remove(point);
             point.Occupied = false;
         }
@@ -163,6 +191,18 @@ namespace PlatformRunner.Spawning
         public void ReleaseAll(IEnumerable<SpawnPoint> points)
         {
             foreach (SpawnPoint point in points)
+                Release(point);
+        }
+
+        /// <summary>
+        /// Called when a spawned instance (e.g. a Collectible that's just
+        /// been picked up) asks to be handed back early. Routes through the
+        /// normal Release(point) path so pooling/occupancy bookkeeping stays
+        /// exactly the same as a block-recycle release.
+        /// </summary>
+        private void HandleReleaseRequested(SpawnablePlacement instance)
+        {
+            if (_instanceToPoint.TryGetValue(instance, out SpawnPoint point))
                 Release(point);
         }
 

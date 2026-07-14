@@ -14,5 +14,7 @@ namespace EndlessRunner.Player.Controls
 
         event Action MeleeAttackPressed;
         event Action RangedAttackPressed;
+        event Action JumpPressed;
+        event Action<bool> SpeedBoostPressed;
     }
 }

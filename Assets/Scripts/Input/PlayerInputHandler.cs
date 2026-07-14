@@ -11,6 +11,8 @@ namespace EndlessRunner.Player.Controls
 
         public event Action MeleeAttackPressed;
         public event Action RangedAttackPressed;
+        public event Action JumpPressed;
+        public event Action<bool> SpeedBoostPressed;
 
         private PlayerControls controls;
 
@@ -40,6 +42,20 @@ namespace EndlessRunner.Player.Controls
                 LateralInput = 1f;
             else if (context.canceled && LateralInput > 0f)
                 LateralInput = 0f;
+        }
+
+        public void OnJump(InputAction.CallbackContext context)
+        {
+            if (context.performed)
+                JumpPressed?.Invoke();
+        }
+
+        public void OnSpeedBoost(InputAction.CallbackContext context)
+        {
+            if (context.performed)
+                SpeedBoostPressed?.Invoke(true);
+            else if (context.canceled)
+                SpeedBoostPressed?.Invoke(false);
         }
     }
 }

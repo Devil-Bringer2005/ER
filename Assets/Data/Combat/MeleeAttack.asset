@@ -17,7 +17,7 @@ MonoBehaviour:
   _cooldown: 0.1
   _damage: 10
   _startupDelay: 0.1
-  _activeDuration: 0.2
+  _activeDuration: 1
   _range: 1.5
   _radius: 0.75
   _hittableLayers:

@@ -55,7 +55,7 @@ public class EnemyAttackState : IEnemyState
 
         Vector3 direction = (aimPoint - enemy.FirePoint.position).normalized;
 
-        GameObject projectileGO = Object.Instantiate(
+        GameObject projectileGO = GameObject.Instantiate(
             enemy.ProjectilePrefab,
             enemy.FirePoint.position,
             Quaternion.LookRotation(direction));

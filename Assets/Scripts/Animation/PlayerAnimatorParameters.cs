@@ -12,5 +12,6 @@ namespace EndlessRunner.Player.Animation
     {
         public static readonly int LateralSpeed = Animator.StringToHash("LateralSpeed");
         public static readonly int ForwardSpeed = Animator.StringToHash("ForwardSpeed");
+        public static readonly int IsGrounded = Animator.StringToHash("IsGrounded");
     }
 }

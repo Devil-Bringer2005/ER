@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 5393748731499445462}
   - component: {fileID: 4174194681992921539}
   - component: {fileID: 7501786658258799164}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Sparks
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4916,7 +4916,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4816229397976369074}
   - component: {fileID: 8769333296707391341}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: FeelDuckDeniedFeedback
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5722,6 +5722,135 @@ MonoBehaviour:
           OnlyPlayIfAdvancedRequirementsMet: 0
           OnlyPlayIfAmplitudeModulationSupported: 0
           OnlyPlayIfFrequencyModulationSupported: 0
+--- !u!1 &1083843646025668940
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3341428549561229327}
+  - component: {fileID: 3572332670101233701}
+  m_Layer: 10
+  m_Name: CachedFeedbackAudioSource
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3341428549561229327
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1083843646025668940}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1.4142135, z: 0.25}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 3042739533120702782}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!82 &3572332670101233701
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1083843646025668940}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_Resource: {fileID: 8300000, guid: 1739ff78014ab3f44a5757aede3c7ea9, type: 3}
+  m_PlayOnAwake: 0
+  m_Volume: 0.85110104
+  m_Pitch: 0.90541446
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1 &1195854515023120140
 GameObject:
   m_ObjectHideFlags: 0
@@ -5733,7 +5862,7 @@ GameObject:
   - component: {fileID: 8492320243800038540}
   - component: {fileID: 3384937543005043830}
   - component: {fileID: 9117985412829335309}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: FeelDuckDust
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -10639,7 +10768,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7412492840036348298}
   - component: {fileID: 6237794124013939636}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: CachedFeedbackAudioSource
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -10769,7 +10898,7 @@ GameObject:
   - component: {fileID: 1402582813585491880}
   - component: {fileID: 3678025085352416370}
   - component: {fileID: 2423982111159660133}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: ForwardParticles
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -15628,7 +15757,7 @@ GameObject:
   - component: {fileID: 1803832348187006855}
   - component: {fileID: 4089909166026239223}
   - component: {fileID: 8341745905728352306}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Enemy Projectile with Feedback
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -15778,7 +15907,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6423953180024378832}
   - component: {fileID: 7070062809613240922}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: CachedFeedbackAudioSource
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -15908,7 +16037,7 @@ GameObject:
   - component: {fileID: 2582780206124149272}
   - component: {fileID: 212676065232496291}
   - component: {fileID: 5688535411860119008}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: HitscanShot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -20823,7 +20952,7 @@ GameObject:
   - component: {fileID: 7338044220636645703}
   - component: {fileID: 7046104644461407583}
   - component: {fileID: 6163010765605961637}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: FeelDuckPixels
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -25738,7 +25867,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2924648766901041835}
   - component: {fileID: 3159048977361926985}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Light
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -25836,7 +25965,7 @@ GameObject:
   - component: {fileID: 2548912093926760222}
   - component: {fileID: 7228144953700129774}
   - component: {fileID: 6588795698260002629}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: SideParticles
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -30799,7 +30928,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7042020461961000713}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Plane Transform 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -30924,7 +31053,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3482322637181750775}
   - component: {fileID: 7332921056362516992}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: CachedFeedbackAudioSource
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -31053,7 +31182,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7146498414791156395}
   - component: {fileID: 1389295931996756926}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: CachedFeedbackAudioSource
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -31182,7 +31311,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3042739533120702782}
   - component: {fileID: 3131608359264802995}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: FeelDuckLandingFeedback
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -31204,6 +31333,7 @@ Transform:
   m_Children:
   - {fileID: 8492320243800038540}
   - {fileID: 6423953180024378832}
+  - {fileID: 3341428549561229327}
   m_Father: {fileID: 2030147292674224978}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &3131608359264802995
@@ -31328,7 +31458,7 @@ MonoBehaviour:
   PerformanceMode: 0
   RestoreInitialValuesOnDisable: 0
   StopFeedbacksOnDisable: 0
-  PlayCount: 21
+  PlayCount: 49
   references:
     version: 2
     RefIds:
@@ -31353,7 +31483,7 @@ MonoBehaviour:
           NumberOfRepeats: 0
           RepeatForever: 0
           DelayBetweenRepeats: 1
-          PlayCount: 21
+          PlayCount: 28
           LimitPlayCount: 0
           MaxPlayCount: 3
           SetPlayCountToZeroOnReset: 0
@@ -31521,7 +31651,7 @@ MonoBehaviour:
           NumberOfRepeats: 0
           RepeatForever: 0
           DelayBetweenRepeats: 1
-          PlayCount: 21
+          PlayCount: 28
           LimitPlayCount: 0
           MaxPlayCount: 3
           SetPlayCountToZeroOnReset: 0
@@ -31646,7 +31776,7 @@ MonoBehaviour:
           NumberOfRepeats: 0
           RepeatForever: 0
           DelayBetweenRepeats: 1
-          PlayCount: 15
+          PlayCount: 0
           LimitPlayCount: 0
           MaxPlayCount: 3
           SetPlayCountToZeroOnReset: 0
@@ -32105,7 +32235,7 @@ MonoBehaviour:
           NumberOfRepeats: 0
           RepeatForever: 0
           DelayBetweenRepeats: 1
-          PlayCount: 15
+          PlayCount: 0
           LimitPlayCount: 0
           MaxPlayCount: 3
           SetPlayCountToZeroOnReset: 0
@@ -32564,7 +32694,7 @@ MonoBehaviour:
           NumberOfRepeats: 0
           RepeatForever: 0
           DelayBetweenRepeats: 1
-          PlayCount: 21
+          PlayCount: 28
           LimitPlayCount: 0
           MaxPlayCount: 3
           SetPlayCountToZeroOnReset: 0
@@ -32646,7 +32776,7 @@ MonoBehaviour:
           NumberOfRepeats: 0
           RepeatForever: 0
           DelayBetweenRepeats: 1
-          PlayCount: 21
+          PlayCount: 28
           LimitPlayCount: 0
           MaxPlayCount: 3
           SetPlayCountToZeroOnReset: 0
@@ -32703,7 +32833,7 @@ MonoBehaviour:
         DeclaredDuration: 0
         Command: 5
         MoveToValue: 2
-        BumpAmount: 125
+        BumpAmount: 100
         MoveToRandomValue: {x: -2, y: 2}
         BumpAmountRandomValue: {x: -50, y: 50}
         OverrideDamping: 0
@@ -32731,7 +32861,7 @@ MonoBehaviour:
           NumberOfRepeats: 0
           RepeatForever: 0
           DelayBetweenRepeats: 1
-          PlayCount: 21
+          PlayCount: 28
           LimitPlayCount: 0
           MaxPlayCount: 3
           SetPlayCountToZeroOnReset: 0
@@ -32861,7 +32991,7 @@ GameObject:
   - component: {fileID: 6155395504205786451}
   - component: {fileID: 4665812248041763467}
   - component: {fileID: 3234123951260678846}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Smoke
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -37891,7 +38021,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4200115084557642368}
   - component: {fileID: 8935250508673661219}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: FeelDuckJumpStartFeedback
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -38681,7 +38811,7 @@ GameObject:
   - component: {fileID: 5226956075002319498}
   - component: {fileID: 5604905158181588731}
   - component: {fileID: 7239339605129601176}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Muzzleflash
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -43601,7 +43731,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7577944793073111549}
   - component: {fileID: 7311349093253082158}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: HitFeedback
   m_TagString: Untagged
   m_Icon: {fileID: 0}
