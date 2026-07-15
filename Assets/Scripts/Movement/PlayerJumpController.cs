@@ -31,6 +31,13 @@ namespace EndlessRunner.Player.Movement
         /// <summary>Current vertical velocity, units/sec. Positive = ascending, negative = falling.</summary>
         public float VerticalVelocity => _verticalVelocity;
 
+        /// <summary>
+        /// Extra air jumps on top of JumpConfig.MaxAirJumps. Lives here rather than on the SO
+        /// so a temporary or permanent "double jump" powerup can add/remove it at runtime
+        /// without mutating a config asset shared by every instance using it.
+        /// </summary>
+        public int BonusAirJumps { get; set; }
+
         /// <summary>Fires the moment a jump (ground or air) is actually performed, with the animator trigger to play.</summary>
         public event Action<string> Jumped;
 
@@ -94,7 +101,7 @@ namespace EndlessRunner.Player.Movement
                     _coyoteTimer = 0f;
                     PerformJump(_config.JumpAnimatorTrigger);
                 }
-                else if (_airJumpsUsed < _config.MaxAirJumps)
+                else if (_airJumpsUsed < _config.MaxAirJumps + BonusAirJumps)
                 {
                     _airJumpsUsed++;
                     PerformJump(_config.AirJumpAnimatorTrigger);
@@ -105,7 +112,7 @@ namespace EndlessRunner.Player.Movement
             // performed this frame (positive velocity) falls into the gravity branch below
             // instead of being immediately reset to the stick value.
             if (grounded && _verticalVelocity <= 0f)
-                _verticalVelocity = -1f; // small downward stick force, keeps isGrounded reliable
+                _verticalVelocity = -1f; 
             else
                 _verticalVelocity += _config.Gravity * deltaTime;
         }

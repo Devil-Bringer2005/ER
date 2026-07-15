@@ -1,6 +1,7 @@
 namespace EndlessRunner.Player.Combat
 {
     using System;
+    using System.Collections.Generic;
     using UnityEngine;
     using EndlessRunner.Player.Controls;
 
@@ -22,6 +23,12 @@ namespace EndlessRunner.Player.Combat
         private IPlayerInputSource _inputSource;
         private float _nextMeleeTime;
         private float _nextRangedTime;
+
+        // LIFO per slot rather than a single "remembered previous" value, so overlapping
+        // temporary weapon powerups nest correctly instead of one clobbering the other's
+        // restore point. State lives here on the instance, not on the shared effect SO asset.
+        private readonly Stack<AttackDefinitionSO> _meleeOverrides = new Stack<AttackDefinitionSO>();
+        private readonly Stack<AttackDefinitionSO> _rangedOverrides = new Stack<AttackDefinitionSO>();
 
         /// <summary>Fired the moment an attack is executed, with the SO that fired. Animation listens here.</summary>
         public event Action<AttackDefinitionSO> AttackExecuted;
@@ -49,6 +56,30 @@ namespace EndlessRunner.Player.Combat
 
         public void TryMeleeAttack() => TryExecute(_meleeAttack, ref _nextMeleeTime);
         public void TryRangedAttack() => TryExecute(_rangedAttack, ref _nextRangedTime);
+
+        /// <summary>Temporarily replaces the ranged slot; pair with PopRangedAttack to restore it.</summary>
+        public void PushRangedAttack(AttackDefinitionSO attack)
+        {
+            _rangedOverrides.Push(_rangedAttack);
+            _rangedAttack = attack;
+        }
+
+        public void PopRangedAttack()
+        {
+            if (_rangedOverrides.Count > 0) _rangedAttack = _rangedOverrides.Pop();
+        }
+
+        /// <summary>Temporarily replaces the melee slot; pair with PopMeleeAttack to restore it.</summary>
+        public void PushMeleeAttack(AttackDefinitionSO attack)
+        {
+            _meleeOverrides.Push(_meleeAttack);
+            _meleeAttack = attack;
+        }
+
+        public void PopMeleeAttack()
+        {
+            if (_meleeOverrides.Count > 0) _meleeAttack = _meleeOverrides.Pop();
+        }
 
         private void TryExecute(AttackDefinitionSO attack, ref float nextAllowedTime)
         {

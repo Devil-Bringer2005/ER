@@ -12,7 +12,12 @@ namespace EndlessRunner.Collectibles
     {
         public static event Action<CollectibleData, GameObject> Collected;
 
+        /// <summary>Raised whenever something grants currency directly.
+        public static event Action<int> CurrencyGranted;
+
         public static void RaiseCollected(CollectibleData data, GameObject collector) =>
             Collected?.Invoke(data, collector);
+
+        public static void RaiseCurrencyGranted(int amount) => CurrencyGranted?.Invoke(amount);
     }
 }

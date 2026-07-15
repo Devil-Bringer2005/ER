@@ -10,15 +10,14 @@ namespace EndlessRunner.Player.Movement
     /// SpeedBoostMeter as it goes. Implements IMovementContributor so PlayerMotorDriver picks
     /// it up on its own - PlayerForwardMotor and PlayerMotorDriver are untouched.
     /// </summary>
-    [RequireComponent(typeof(SpeedBoostMeter))]
     [AddComponentMenu("Player/Movement/Speed Boost Motor")]
     public class SpeedBoostMotor : MonoBehaviour, IMovementContributor
     {
+        [SerializeField] private SpeedBoostMeter _meter;
         [SerializeField] private SpeedBoostConfig _config;
         [SerializeField] private MMF_Player boostStartFeedback;
         [SerializeField] private MMF_Player boostEndFeedback;
 
-        private SpeedBoostMeter _meter;
         private IPlayerInputSource _inputSource;
         private bool boost = false;
 
@@ -35,7 +34,6 @@ namespace EndlessRunner.Player.Movement
                 Debug.LogError($"{nameof(PlayerLateralMotor)} is missing its {nameof(LateralMovementConfig)}.", this);
 
             _inputSource.SpeedBoostPressed += HandleSpeedBoost;
-            _meter = GetComponent<SpeedBoostMeter>();
         }
 
         private void HandleSpeedBoost(bool isBoosting)
