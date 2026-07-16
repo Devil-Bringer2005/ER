@@ -57,5 +57,10 @@ namespace EndlessRunner.Player.Controls
             else if (context.canceled)
                 SpeedBoostPressed?.Invoke(false);
         }
+
+        public void OnDrift(InputAction.CallbackContext context)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

@@ -136,6 +136,15 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Drift"",
+                    ""type"": ""Button"",
+                    ""id"": ""54ae874c-9de3-4583-80c7-5b2a2f540914"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -226,6 +235,17 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""action"": ""SpeedBoost"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""252d8c4f-c223-44ec-a291-2d026b60cdaa"",
+                    ""path"": """",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Drift"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -239,6 +259,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         m_Player_Attack = m_Player.FindAction("Attack", throwIfNotFound: true);
         m_Player_Jump = m_Player.FindAction("Jump", throwIfNotFound: true);
         m_Player_SpeedBoost = m_Player.FindAction("SpeedBoost", throwIfNotFound: true);
+        m_Player_Drift = m_Player.FindAction("Drift", throwIfNotFound: true);
     }
 
     ~@PlayerControls()
@@ -324,6 +345,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Attack;
     private readonly InputAction m_Player_Jump;
     private readonly InputAction m_Player_SpeedBoost;
+    private readonly InputAction m_Player_Drift;
     /// <summary>
     /// Provides access to input actions defined in input action map "Player".
     /// </summary>
@@ -355,6 +377,10 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         /// Provides access to the underlying input action "Player/SpeedBoost".
         /// </summary>
         public InputAction @SpeedBoost => m_Wrapper.m_Player_SpeedBoost;
+        /// <summary>
+        /// Provides access to the underlying input action "Player/Drift".
+        /// </summary>
+        public InputAction @Drift => m_Wrapper.m_Player_Drift;
         /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
@@ -396,6 +422,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @SpeedBoost.started += instance.OnSpeedBoost;
             @SpeedBoost.performed += instance.OnSpeedBoost;
             @SpeedBoost.canceled += instance.OnSpeedBoost;
+            @Drift.started += instance.OnDrift;
+            @Drift.performed += instance.OnDrift;
+            @Drift.canceled += instance.OnDrift;
         }
 
         /// <summary>
@@ -422,6 +451,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @SpeedBoost.started -= instance.OnSpeedBoost;
             @SpeedBoost.performed -= instance.OnSpeedBoost;
             @SpeedBoost.canceled -= instance.OnSpeedBoost;
+            @Drift.started -= instance.OnDrift;
+            @Drift.performed -= instance.OnDrift;
+            @Drift.canceled -= instance.OnDrift;
         }
 
         /// <summary>
@@ -497,5 +529,12 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnSpeedBoost(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "Drift" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnDrift(InputAction.CallbackContext context);
     }
 }
