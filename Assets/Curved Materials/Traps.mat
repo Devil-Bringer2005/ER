@@ -24,7 +24,9 @@ Material:
   m_Shader: {fileID: 4800000, guid: ee79f6ccea27bc24b871fc84887480c4, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
-  m_ValidKeywords: []
+  m_ValidKeywords:
+  - _BEND_ON
+  - _TWIST_ON
   m_InvalidKeywords:
   - CURVEDWORLD_BEND_ID_1
   - CURVEDWORLD_BEND_TYPE_CLASSICRUNNER_X_POSITIVE
@@ -159,11 +161,11 @@ Material:
     - _TwistStrength: 1
     - _UseAdditionalLights: 1
     - _UseAmbient: 0
-    - _UseBend: 0
+    - _UseBend: 1
     - _UseBlingPhong: 0
     - _UseEmission: 0
     - _UseNormal: 0
-    - _UseTwist: 0
+    - _UseTwist: 1
     - _UseTwistedSpiral: 0
     - _UseWorldTiling: 0
     - _WorkflowMode: 1

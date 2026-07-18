@@ -253,17 +253,17 @@ Shader "Custom/CelshadeSimple"
 
 
                 
-                // #ifdef _TWIST_ON
-                // positionOS = TwistArountAxis(positionOS,float3(1,0,0),_TwistAmount.x);
-                // positionOS = TwistArountAxis(positionOS,float3(0,1,0),_TwistAmount.y);
-                // positionOS = TwistArountAxis(positionOS,float3(0,0,1),_TwistAmount.z);
-                // #endif
+                #ifdef _TWIST_ON
+                positionOS = TwistArountAxis(positionOS,float3(1,0,0),_TwistAmount.x);
+                positionOS = TwistArountAxis(positionOS,float3(0,1,0),_TwistAmount.y);
+                positionOS = TwistArountAxis(positionOS,float3(0,0,1),_TwistAmount.z);
+                #endif
 
-                // #ifdef _BEND_ON
-                // positionOS = BendAroundAxis(positionOS,float3(0,1,0),float3(1,0,0),_BendAmount.x);
-                // positionOS = BendAroundAxis(positionOS,float3(1,0,0),float3(0,1,0),_BendAmount.y);
-                // positionOS = BendAroundAxis(positionOS,float3(0,1,0),float3(0,0,1),_BendAmount.z);
-                // #endif
+                #ifdef _BEND_ON
+                positionOS = BendAroundAxis(positionOS,float3(0,1,0),float3(1,0,0),_BendAmount.x);
+                positionOS = BendAroundAxis(positionOS,float3(1,0,0),float3(0,1,0),_BendAmount.y);
+                positionOS = BendAroundAxis(positionOS,float3(0,1,0),float3(0,0,1),_BendAmount.z);
+                #endif
 
                 // Vertex Bending
                 // #ifdef _BEND_ON

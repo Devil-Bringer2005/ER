@@ -9,7 +9,7 @@ namespace PlatformRunner.Platforms
     /// chain up to and including this block. A block with several exits can carry
     /// several of these, one per branch.
     /// </summary>
-    [RequireComponent(typeof(Collider))]
+    [RequireComponent(typeof(BoxCollider))]
     public class BlockExitTrigger : MonoBehaviour
     {
         [SerializeField] private string playerTag = "Player";
