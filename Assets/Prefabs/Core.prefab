@@ -1520,6 +1520,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0593ae60249525c4db8a67c25b6b80a8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EndlessRunner.Player.Movement.SpeedBoostMotor
+  _meter: {fileID: 0}
   _config: {fileID: 11400000, guid: 991ca82da4f999b43b855274a88492ec, type: 2}
   boostStartFeedback: {fileID: 4404104519264372271}
   boostEndFeedback: {fileID: 8277260782947522568}
