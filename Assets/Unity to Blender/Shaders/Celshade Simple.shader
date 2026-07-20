@@ -471,21 +471,9 @@ Shader "Custom/CelshadeSimple"
 
                             half3 L = normalize(light.direction);
                             half3 R = reflect(-L, N);
-                            // Texture to normal map convertion 
-                            float3 normalTS = UnpackNormal(tex2D(_NormalTex,IN.uv)); 
+                            
 
-                            // Normal and Tangent
-                            normalTS.xy *= _NormalStrength;  // normal intensity
-                            normalTS = normalize(normalTS);
-               
-                            float3x3 TBN = float3x3(
-                            normalize(IN.tangentWS),
-                            normalize(IN.bitangentWS),
-                            normalize(IN.normalWS)
-                            );
-
-                            half3 H = normalize(L + V); // Half Vector
-                            float3 Nt = normalize(mul(normalTS,TBN));
+                            
                             
 
                             float att = light.distanceAttenuation * light.shadowAttenuation;
@@ -497,11 +485,30 @@ Shader "Custom/CelshadeSimple"
                             additionalDiffuse += diff * att * light.color * shadedAlbedo;
 
                             // Toon specular (Additional)
-                            half spec = (saturate(dot(H,Nt)));
-                            half specExp = exp2(_Gloss * 64);
-                            spec = pow(spec,specExp);
-                            half specStep = smoothstep(_SpecularThreshold,_SpecularThreshold + _SpecularSmoothness,spec);
-                            additionalSpecular += specStep * att * light.color;
+                            
+                            if(_UseNormal > 0.5){
+                                // Texture to normal map convertion 
+                                float3 normalTS = UnpackNormal(tex2D(_NormalTex,IN.uv)); 
+
+                                // Normal and Tangent
+                                normalTS.xy *= _NormalStrength;  // normal intensity
+                                normalTS = normalize(normalTS);
+               
+                                float3x3 TBN = float3x3(
+                                normalize(IN.tangentWS),
+                                normalize(IN.bitangentWS),
+                                normalize(IN.normalWS)
+                                );
+
+                                half3 H = normalize(L + V); // Half Vector
+                                float3 Nt = normalize(mul(normalTS,TBN));
+                                half spec = (saturate(dot(H,Nt)));
+                                half specExp = exp2(_Gloss * 64);
+                                spec = pow(spec,specExp);
+                                half specStep = smoothstep(_SpecularThreshold,_SpecularThreshold + _SpecularSmoothness,spec);
+                                additionalSpecular += specStep * att * light.color;
+                            }
+                            
 
                         LIGHT_LOOP_END
                     #endif
