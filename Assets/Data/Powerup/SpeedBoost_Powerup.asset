@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: SpeedBoost_Powerup
   m_EditorClassIdentifier: Assembly-CSharp::EndlessRunner.Player.Powerups.PowerupData
   _displayName: Spped Boost
-  _icon: {fileID: 0}
-  _duration: 0.03
+  _icon: {fileID: 21300000, guid: ab943d3d5ac38bb448fabe3cdc9516d1, type: 3}
+  _duration: 10
   _effects:
   - {fileID: 11400000, guid: df24ac07161ff7d40a3c95351d37d9d4, type: 2}
