@@ -56,7 +56,9 @@ namespace EndlessRunner.Player.Powerups
             foreach (BarEntry entry in _entries)
             {
                 if (entry.Data == data)
+                {
                     return entry;
+                }
             }
 
             // Reuse an inactive bar

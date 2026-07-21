@@ -144,10 +144,10 @@ MonoBehaviour:
   m_Type: 3
   m_PreserveAspect: 0
   m_FillCenter: 1
-  m_FillMethod: 4
-  m_FillAmount: 0.342
+  m_FillMethod: 1
+  m_FillAmount: 1
   m_FillClockwise: 1
-  m_FillOrigin: 2
+  m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
 --- !u!1 &2974125901342796210
@@ -539,7 +539,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &7376776776004443370
 RectTransform:
   m_ObjectHideFlags: 0
@@ -583,7 +583,7 @@ MonoBehaviour:
   MinimumBarFillValue: 0
   MaximumBarFillValue: 1
   SetInitialFillValueOnStart: 1
-  InitialFillValue: 0.8
+  InitialFillValue: 1
   BarDirection: 0
   FillMode: 1
   TimeScale: 0
@@ -650,7 +650,7 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  DecreasingDelay: 0
+  DecreasingDelay: 0.75
   LerpDecreasingDelayedBar: 1
   LerpDecreasingDelayedBarSpeed: 15
   LerpDecreasingDelayedBarDuration: 0.3
@@ -835,7 +835,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1679378573898978325}
-        m_TargetAssemblyTypeName: 
+        m_TargetAssemblyTypeName: MoreMountains.Feedbacks.MMF_Player, MoreMountains.Tools
         m_MethodName: PlayFeedbacks
         m_Mode: 1
         m_Arguments:
@@ -850,7 +850,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 4223875606701644452}
-        m_TargetAssemblyTypeName: 
+        m_TargetAssemblyTypeName: MoreMountains.Feedbacks.MMF_Player, MoreMountains.Tools
         m_MethodName: PlayFeedbacks
         m_Mode: 1
         m_Arguments:
@@ -869,16 +869,16 @@ MonoBehaviour:
   TextFormat: 000
   DisplayTotal: 0
   TotalSeparator: ' / '
-  DebugNewTargetValue: 0.342
+  DebugNewTargetValue: 1
   DebugUpdateBarButton: 0
   DebugSetBarButton: 0
   TestBumpButton: 0
   Plus10PercentButton: 0
   Minus10PercentButton: 0
-  BarProgress: 0.342
-  BarTarget: 0.342
-  DelayedBarIncreasingProgress: 0.342
-  DelayedBarDecreasingProgress: 0.342
+  BarProgress: 1
+  BarTarget: 1
+  DelayedBarIncreasingProgress: 1
+  DelayedBarDecreasingProgress: 1
 --- !u!1 &7360071651059313770
 GameObject:
   m_ObjectHideFlags: 0
@@ -1654,10 +1654,10 @@ MonoBehaviour:
   m_Type: 3
   m_PreserveAspect: 0
   m_FillCenter: 1
-  m_FillMethod: 4
-  m_FillAmount: 0.342
+  m_FillMethod: 1
+  m_FillAmount: 1
   m_FillClockwise: 1
-  m_FillOrigin: 2
+  m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
 --- !u!1 &8485999999945795286
