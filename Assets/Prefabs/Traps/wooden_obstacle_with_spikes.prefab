@@ -368,6 +368,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4178714553879769694}
   - component: {fileID: 4379751763513431883}
+  - component: {fileID: 6446277521611526877}
   m_Layer: 0
   m_Name: wooden_obstacle_with_spikes
   m_TagString: Untagged
@@ -406,3 +407,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlatformRunner.Spawning.SpawnablePlacement
   category: 1
   groundPoint: {fileID: 8633509809764056984}
+--- !u!114 &6446277521611526877
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8921915786849495522}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: afc38173e968a1549a7522f60bd8024e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MoveForward
+  velocity: {x: 0, y: 0, z: -5}
